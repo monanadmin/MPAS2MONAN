@@ -1,0 +1,27 @@
+name = "MONAN"
+version = "0.1.0"
+license = "GPL-V3.0"
+author = "The Monan Team"
+maintainer = "monanTeam@inpe.br"
+copyright = "Copyright (c) 2013-2019,  Los Alamos National Security, LLC (LANS)"
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+module-naming = false
+
+[install]
+library = false
+
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "free"
+
+[dependencies]
+mpi = "*"
+openmp = "*"
+esmf_time = { git="https://github.com/monanadmin/esmf_time_f90" } 
+ezxml = { git = "https://github.com/monanadmin/EZXML"}
+SMIOL = { git = "https://github.com/monanadmin/smiol"}

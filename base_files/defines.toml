@@ -1,0 +1,40 @@
+# Config for MONAN/MPAS structure
+
+title = "Normal MONAN run"
+
+[paths]
+REGISTRY = "/home/lufla/projetos/registry"
+
+[compiler]
+F90 = "gfortran"
+CC = "gcc"
+CXX = "g++"
+MPIF90 = "mpif90"
+MPICC = "mpicc"
+MPICXX = "mpicxx"
+FFLAGS = "-fdefault-real-8 -fdefault-double-8 -std=f2008 -O3 -ffree-line-length-none -fconvert=big-endian -ffree-form"
+CFLAGS = "-O3"
+LIBS = "-L/opt/apps/lib -l pnetcdf"
+CPP = "fypp"
+
+[defines]
+MPAS = "YES"
+CORE_ATMOSPHERE = "YES"
+MPAS_SMIOL_SUPPORT = "YES"
+MPAS_PIO_SUPPORT = "NO"
+DO_PHYSICS = "YES"
+MPAS_OPENMP = "NO"
+MPAS_OPENACC = "NO"
+MPAS_DEBUG="NO"
+USE_PIO2 = "NO"
+CONST_INNER_DIMS = "NO"
+MPAS_CAM_DYCORE = "NO"
+WRF_DFI_RADAR = "NO"
+WRF_CHEM = "NO"
+HWRF = "NO"
+EM_CORE = "NO"
+NMM_CORE = "NO"
+_MPI = "YES"
+
+[model]
+VERSION = "0.1.0"
