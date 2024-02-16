@@ -27,8 +27,11 @@ write_log("Initial time of pre-build")
 
 #Read the "../setup/monan_setup.toml" to setup the model
 print("1. Reading the setup to pre_build...")
-pp_command,version, registry = readToml()
+pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir = readToml()
 write_log(pp_command)
+
+all_includes = [netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir]
+
 
 print("2. Creating the src directory to receive the sources .f90...")
 cmd = "cp -R ../pre_build_src ../src"
@@ -43,52 +46,46 @@ for root, dirs, files in os.walk("../src"):
       returned_value = os.system(cmd)
 
 monan_base_dir = "../setup/core_atmosphere/"
-cpp = "cpp -E -I../include/ "+pp_command
-fpp = "fypp --include=../setup/core_atmosphere/diagnostics "+pp_command
+include = "-I../include/"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+cpp = "cpp -E "+include+" "+pp_command
+include = " -I../setup/core_atmosphere/diagnostics"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+fpp = "fypp "+include+" "+pp_command
 
 print("3. Filter xml setup file ..")
 filterFypp(monan_base_dir=monan_base_dir,cpp = cpp,fpp = fpp)
 monan_base_dir = "../setup/core_init_atmosphere/"
 filterFypp(monan_base_dir=monan_base_dir,cpp = cpp,fpp = fpp)
 
+print("4. Filter ESMF_Macros.fypp ..")
 monan_base_dir = "../include"
 filterFile(monan_base_dir,"ESMF_Macros.fypp",cpp = cpp,fpp = fpp,new_src=monan_base_dir)
 #filterFile(monan_base_dir,"smiol_codes.fypp",cpp = cpp,fpp = fpp,new_src=monan_base_dir)
 
-
+print("5. Generating the includes from registry ..")
 registry_processed = "../setup/core_atmosphere/Registry_processed.xml"
 mod_dir = "../include"
-
-# print("5. Building structs_and_variables.inc ... ")
-# struct_and_variables(registry_processed = registry_processed,inc_dir = mod_dir) # <---- Precisa verificar e corrigir!!!!!
-
-# print("6. Building core_variables.inc ... ")
-# core_variables_write(registry_processed = registry_processed,inc_dir = mod_dir)
-
-# print("7. Building domain_variables.inc ... ")
-# domain_variables(registry_processed = registry_processed,inc_dir = mod_dir)
-
-# print("8. Building define_packages.inc ... ")
-# define_packages(registry_processed = registry_processed,inc_dir = mod_dir)
-
-# print("9. Building setup_immutable_streams.inc ... ")
-# setup_immutable_streams(registry_processed = registry_processed,inc_dir = mod_dir)
-
-# print("10.Building block_dimension_routines.inc ... ")
-# block_dimension_routines(registry_processed = registry_processed,inc_dir = mod_dir)
-# pbl.close()
-
-# print("11.Building namelist_call.inc ... ")
-# namelist_call(registry_processed = registry_processed,inc_dir = mod_dir)
-# pbl.close()
-
-# print("12. Building namelist_defines.inc ... ")
-# namelist_defines(registry_processed = registry_processed,inc_dir = mod_dir)
-# #sys.exit()
-
-cmd = "cp "+registry+"/*.inc ../include"
+registry_exe = registry+"/bin/registry"
+registry_processed = "../setup/core_atmosphere/Registry_processed.xml"
+cmd = registry_exe+" "+registry_processed
 returned_value = os.system(cmd)
 
+print("6. Copy the includes from registry ..")
+cmd = "cp ./*.inc ../include"
+returned_value = os.system(cmd)
+
+include = "-I../include/"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+cpp = "cpp -E "+include+" "+pp_command
+include = " -I../include/"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+fpp = "fypp "+include+" "+pp_command
+print("7. Filter include dir ..")
 monan_base_dir = "../include"
 for root, dirs, files in os.walk(monan_base_dir):
    for file in files:
@@ -96,16 +93,18 @@ for root, dirs, files in os.walk(monan_base_dir):
       if file_ext == ".fypp":
          filterFile(monan_base_dir,file,cpp = cpp,fpp = fpp,new_src=monan_base_dir)
 
+include = "-I../include/"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+cpp = "cpp -E "+include+" "+pp_command
+include = " -I../include/"
+for i in all_includes:
+   include = include + " -I"+i+"/include"
+fpp = "fypp "+include+" "+pp_command
 monan_base_dir = "../pre_build_src"
-cpp = "cpp -E -I../include/ "+pp_command
-fpp = "fypp --include=../include "+pp_command
-print("13. Filter files with cpp or fypp.for src..")
+print("8. Filter pre_build_src ..")
 filterFypp(monan_base_dir=monan_base_dir,cpp = cpp,fpp = fpp)
-
-# print("4. Creating modules directory ... ")
-# cmd = "mkdir "+mod_dir
-# write_log(cmd)
-# returned_value = os.system(cmd)
-
+#cpp = "cpp -E -I../include/ "+pp_command
+#fpp = "fypp --include=../include "+pp_command
 
 pbl.close()

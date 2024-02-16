@@ -16,6 +16,12 @@ FFLAGS = "-fdefault-real-8 -fdefault-double-8 -std=f2008 -O3 -ffree-line-length-
 CFLAGS = "-O3"
 LIBS = "-L/opt/apps/lib -l pnetcdf"
 CPP = "fypp"
+NETCDF_DIR  = "/opt/gnu/"
+HDF5_DIR    = "/opt/gnu/"
+PNETCDF_DIR = "/opt/gnu/"
+MPI_DIR     = "/opt/gnu/"
+PIO_DIR     = "/opt/gnu/"
+
 
 [defines]
 MPAS = "YES"

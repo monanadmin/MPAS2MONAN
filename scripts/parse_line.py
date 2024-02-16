@@ -70,7 +70,7 @@ def translate_fypp_call(allVars,line,file):
    for i in range(len(allVars)):
       vars_in_call[i] = vars_in_call[i].strip()
    #if "module_ra_rrtmg_lw" in file:
-   #   print("após strip:",vars_in_call)
+   #   print("apos strip:",vars_in_call)
    for var in allVars:
       vars_in_call = replace_values(vars_in_call,var,"${"+var+"}$")
    #if "module_ra_rrtmg_lw" in file:

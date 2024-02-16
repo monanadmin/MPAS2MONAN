@@ -9,14 +9,14 @@ def write_Filter_log(message,pbl):
 def filterFile(root,file,cpp,fpp,new_src):
    #Open a log file to write the steps
    pbl = open("filter.log","a")
-   write_Filter_log(root,pbl)
+   write_Filter_log("filter "+root+" in "+new_src,pbl)
 
-   print("3.1 Filtering "+root+"/"+file)
+   print("Filtering "+root+"/"+file)
    file_name,file_ext  = os.path.splitext(file)
    print(file_name,"|",file_ext)
    if file_ext == ".F90":
       fileDestin = file_name +".f90"
-   if file_ext == ".fypp":
+   elif file_ext == ".fypp":
       fileDestin = file_name+".inc"
    elif file_ext == ".h" or file_ext == ".inc":
       return

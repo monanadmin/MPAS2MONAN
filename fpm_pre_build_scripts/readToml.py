@@ -21,6 +21,12 @@ def readToml():
 
    registry = paths["REGISTRY"]
 
+   netcdf_dir =compiler["NETCDF_DIR"]
+   hdf5_dir   =compiler["HDF5_DIR"]
+   pnetcdf_dir=compiler["PNETCDF_DIR"]
+   mpi_dir    =compiler["MPI_DIR"]
+   pio_dir    =compiler["PIO_DIR"]
+
    pp_command = " "
    if defines["MPAS"] == "YES":
       MPAS = True
@@ -85,4 +91,4 @@ def readToml():
 
    version = model["VERSION"]
 
-   return pp_command,version,registry
+   return pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir    

@@ -256,6 +256,8 @@ def changeDefines(dir):
    list_files = list(recursive_file_gen(dir))
 
    for file_in in list_files:
+      if file_in == "./monan/include/smiol_codes.inc":
+         continue
       file_name,file_ext  = os.path.splitext(file_in)
       file_out = file_name+".aux"
       file_end = file_name+".F"
