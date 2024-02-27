@@ -27,7 +27,7 @@ write_log("Initial time of pre-build")
 
 #Read the "../setup/monan_setup.toml" to setup the model
 print("1. Reading the setup to pre_build...")
-pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir = readToml()
+pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command = readToml()
 write_log(pp_command)
 
 all_includes = [netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir]
@@ -106,5 +106,9 @@ print("8. Filter pre_build_src ..")
 filterFypp(monan_base_dir=monan_base_dir,cpp = cpp,fpp = fpp)
 #cpp = "cpp -E -I../include/ "+pp_command
 #fpp = "fypp --include=../include "+pp_command
+
+f = open("build_command.sh","w")
+f.write(fpm_command)
+f.close()
 
 pbl.close()

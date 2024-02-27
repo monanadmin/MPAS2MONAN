@@ -26,6 +26,13 @@ def readToml():
    pnetcdf_dir=compiler["PNETCDF_DIR"]
    mpi_dir    =compiler["MPI_DIR"]
    pio_dir    =compiler["PIO_DIR"]
+   f90_compiler =compiler["F90"]
+   cc_compiler = compiler["CC"]
+   mpif90 = compiler["MPIF90"]
+   mpicc = compiler["MPICC"]
+   fflags = compiler["FFLAGS"]
+   cflags = compiler["CFLAGS"]
+   libs = compiler["LIBS"]
 
    pp_command = " "
    if defines["MPAS"] == "YES":
@@ -91,4 +98,8 @@ def readToml():
 
    version = model["VERSION"]
 
-   return pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir    
+   fpm_command = 'fpm build compiler="'
+   fpm_command = fpm_command + mpif90 + '" --flag "'+fflags + '" --flag "'  + libs + '" --flag "' + pp_command + '" '
+   fpm_command = fpm_command + '--c-compiler="' + mpicc + '" --c-flag "' + cflags +'"'
+
+   return pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command    
