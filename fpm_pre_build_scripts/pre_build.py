@@ -6,13 +6,11 @@ from filterFypp import filterFypp,filterFile
 from structsAndVariables import struct_and_variables
 from domainsVariables import domain_variables
 from coreVariables import core_variables_write
-from allStreams import streams_write
 from configDeclare import config_declare
 from configGet import config_get
 from namelistCall import namelist_call
 from definePackages import define_packages
 from namelistDefines import namelist_defines
-from namelist import namelist_write
 from setupImmutableStreams import setup_immutable_streams
 from blockDimensionRoutines import block_dimension_routines
 
