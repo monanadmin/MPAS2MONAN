@@ -1,6 +1,10 @@
 # Config for MONAN/MPAS structure
 
 title = "Normal MONAN run"
+[model]
+EXE_NAME = "monan"
+BUILD_TARGET = "gfortran"
+VERSION = "0.1.0"
 
 [paths]
 REGISTRY = "/home/lufla/projetos/registry"
@@ -42,5 +46,4 @@ EM_CORE = "NO"
 NMM_CORE = "NO"
 _MPI = "YES"
 
-[model]
-VERSION = "0.1.0"
+

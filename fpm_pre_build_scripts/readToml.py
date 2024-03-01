@@ -1,7 +1,8 @@
 import toml
 
-def readToml():
-   tomlFile = "../setup/monan_setup.toml"
+def readToml(tomlFile):
+   if tomlFile == "":
+      tomlFile = "../setup/monan_setup.toml"
    data=toml.load(tomlFile)
    
    paths = data["paths"]
@@ -97,9 +98,11 @@ def readToml():
       pp_command = pp_command+"-DNMM_CORE=0 "
 
    version = model["VERSION"]
+   build_target = model["BUILD_TARGET"]
+   exe_name = model["EXE_NAME"]
 
    fpm_command = 'fpm build compiler="'
    fpm_command = fpm_command + mpif90 + '" --flag "'+fflags + '" --flag "'  + libs + '" --flag "' + pp_command + '" '
    fpm_command = fpm_command + '--c-compiler="' + mpicc + '" --c-flag "' + cflags +'"'
 
-   return pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command    
+   return pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command,build_target,exe_name     

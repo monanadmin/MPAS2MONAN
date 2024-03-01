@@ -25,7 +25,7 @@ write_log("Initial time of pre-build")
 
 #Read the "../setup/monan_setup.toml" to setup the model
 print("1. Reading the setup to pre_build...")
-pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command = readToml()
+pp_command,version,registry,netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir,fpm_command,build_target,exe_name = readToml()
 write_log(pp_command)
 
 all_includes = [netcdf_dir,hdf5_dir,pnetcdf_dir,mpi_dir,pio_dir]
